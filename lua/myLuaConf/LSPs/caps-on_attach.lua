@@ -1,5 +1,5 @@
 local M = {}
-function M.on_attach(_, bufnr)
+function on_attach(_, bufnr)
   -- we create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
 
@@ -40,6 +40,21 @@ function M.on_attach(_, bufnr)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
 
+  if nixCats('general.which-key') then
+    require('which-key').add {
+      { "<leader>l", group = "Lsp" },
+    }
+  end
+
+end
+
+function M.on_attach(cfg, client, bufnr)
+  return function(client, bufnr)
+    on_attach(client, bufnr)
+    if cfg['on_attach_extra'] then
+      cfg['on_attach_extra'](client, bufnr)
+    end
+  end
 end
 
 function M.get_capabilities(server_name)

@@ -39,6 +39,11 @@ require('lze').load {
     end,
   },
   {
+    "ltex_extra.nvim",
+    for_cat = "languages.latex",
+    on_require = "ltex_extra",
+  },
+  {
     "markdown-preview.nvim",
     -- NOTE: for_cat is a custom handler that just sets enabled value for us,
     -- based on result of nixCats('cat.name') and allows us to set a different default if we wish
@@ -81,15 +86,6 @@ require('lze').load {
     event = "DeferredUIEnter",
     after = function(plugin)
       require("ibl").setup()
-    end,
-  },
-  {
-    "nvim-surround",
-    for_cat = 'general.always',
-    event = "DeferredUIEnter",
-    -- keys = "",
-    after = function(plugin)
-      require('nvim-surround').setup()
     end,
   },
   {
@@ -237,6 +233,12 @@ require('lze').load {
 
           -- Text object
           map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })
+
+          if nixCats('general.which-key') then
+            require('which-key').add {
+              { "<leader>g", group = "Git" },
+            }
+          end
         end,
       })
       vim.cmd([[hi GitSignsAdd guifg=#04de21]])
@@ -246,35 +248,21 @@ require('lze').load {
   },
   {
     "which-key.nvim",
-    for_cat = 'general.always',
+    for_cat = 'general.which-key',
     -- cmd = { "" },
     event = "DeferredUIEnter",
+    on_require = "which-key",
     -- ft = "",
     -- keys = "",
     -- colorscheme = "",
     after = function (plugin)
       require('which-key').setup({
       })
-      -- require('which-key').add {
-      --   { "<leader><leader>", group = "buffer commands" },
-      --   { "<leader><leader>_", hidden = true },
-      --   { "<leader>c", group = "[c]ode" },
-      --   { "<leader>c_", hidden = true },
-      --   { "<leader>d", group = "[d]ocument" },
-      --   { "<leader>d_", hidden = true },
-      --   { "<leader>g", group = "[g]it" },
-      --   { "<leader>g_", hidden = true },
-      --   { "<leader>m", group = "[m]arkdown" },
-      --   { "<leader>m_", hidden = true },
-      --   { "<leader>r", group = "[r]ename" },
-      --   { "<leader>r_", hidden = true },
-      --   { "<leader>s", group = "[s]earch" },
-      --   { "<leader>s_", hidden = true },
-      --   { "<leader>t", group = "[t]oggles" },
-      --   { "<leader>t_", hidden = true },
-      --   { "<leader>w", group = "[w]orkspace" },
-      --   { "<leader>w_", hidden = true },
-      -- }
+      if nixCats('general.markdown') then
+        require('which-key').add {
+          { "<leader>m", group = "Markdown" },
+        }
+      end
     end,
   },
 }

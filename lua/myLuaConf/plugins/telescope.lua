@@ -119,6 +119,14 @@ return {
       pcall(require('telescope').load_extension, 'ui-select')
 
       vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
+
     end,
+    beforeAll = function(_)
+      if nixCats('general.which-key') then
+        require('which-key').add {
+          { "<leader>s", group = "Search" },
+        }
+      end
+    end
   },
 }

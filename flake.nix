@@ -24,6 +24,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    plugins-texlabconfig = {
+      url = "github:f3fora/nvim-texlabconfig";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs
@@ -33,6 +37,13 @@
     forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
     extra_pkg_config = {
       # allowUnfree = true;
+      # packageOverrides = p: {
+      #   vimPlugins = p.vimPlugins // {
+      #     ltex_extra-nvim = p.vimPlugins.ltex_extra-nvim.overrideAttrs {
+      #       patches = [ ./ltex_extra.patch ];
+      #     };
+      #   };
+      # };
     };
     dependencyOverlays = /* (import ./overlays inputs) ++ */ [
       # This overlay grabs all the inputs named in the format
@@ -79,6 +90,17 @@
           # also you can do this.
           inherit (pkgs) nix-doc lua-language-server nixd;
           # and each will be its own sub category
+        };
+        languages = with pkgs; {
+          bash = [ bash-language-server ];
+          python = [ pyright ];
+          latex = let
+            nvim-texlabconfig-command = pkgs.buildGoModule {
+              name = "nvim-texlabconfig";
+              src = inputs.plugins-texlabconfig;
+              vendorHash = "sha256-rGkR6J18wv3z5rncOQhI6kHWP/j9zMKlHk+rmwYKoi8=";
+            };
+          in [ texlab ltex-ls texliveFull sioyek nvim-texlabconfig-command ];
         };
       };
 
@@ -144,6 +166,12 @@
         neonixdev = with pkgs.vimPlugins; [
           lazydev-nvim
         ];
+        languages = {
+          latex = with pkgs.vimPlugins; [
+            ltex_extra-nvim
+            pkgs.neovimPlugins.texlabconfig
+          ];
+        };
         general = {
           cmp = with pkgs.vimPlugins; [
             # cmp stuff
@@ -175,6 +203,9 @@
             telescope-ui-select-nvim
             telescope-nvim
           ];
+          which-key = with pkgs.vimPlugins; [
+            which-key-nvim
+          ];
           always = with pkgs.vimPlugins; [
             nvim-lspconfig
             # lualine-nvim
@@ -187,7 +218,6 @@
           extra = with pkgs.vimPlugins; [
             fidget-nvim
             # lualine-lsp-progress
-            which-key-nvim
             comment-nvim
             undotree
             indent-blankline-nvim
@@ -259,6 +289,7 @@
           lint = true;
           format = true;
           neonixdev = true;
+          languages = true;
 
           # enabling this category will enable the go category,
           # and ALSO debug.go and debug.default due to our extraCats in categoryDefinitions.
@@ -353,3 +384,4 @@
   });
 
 }
+

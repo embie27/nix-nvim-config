@@ -31,10 +31,27 @@
         "type": "github"
       }
     },
+    "plugins-texlabconfig": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1736415776,
+        "narHash": "sha256-kAmUNUl7zXX6eYyJGn86m/Qgao9tuxD3q5PpUMbmr28=",
+        "owner": "f3fora",
+        "repo": "nvim-texlabconfig",
+        "rev": "dd1f872b273e70662e2e073f1856d64e4f8bb137",
+        "type": "github"
+      },
+      "original": {
+        "owner": "f3fora",
+        "repo": "nvim-texlabconfig",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "nixCats": "nixCats",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "plugins-texlabconfig": "plugins-texlabconfig"
       }
     }
   },
