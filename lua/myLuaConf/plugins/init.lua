@@ -73,6 +73,74 @@ require('lze').load {
     end,
   },
   {
+    "mini.basics",
+    for_cat = "general.always",
+    event = "DeferredUIEnter",
+    after = function (_)
+      require("mini.basics").setup {
+        mappings = {
+          basic = true,
+          windows = true,
+        }
+      }
+    end
+  },
+  {
+    "mini.ai",
+    for_cat = "general.always",
+    event = "DeferredUIEnter",
+    after = function (_)
+      require("mini.ai").setup {
+        -- TODO
+      }
+    end
+  },
+  {
+    "mini.jump",
+    for_cat = "general.always",
+    event = "DeferredUIEnter",
+    after = function (_)
+      require("mini.jump").setup {}
+    end
+  },
+  {
+    "mini.surround",
+    for_cat = "general.extra",
+    event = "DeferredUIEnter",
+    after = function (_)
+      require("mini.surround").setup {
+        mappings = {
+          add = 'gsa', -- Add surrounding in Normal and Visual modes
+          delete = 'gsd', -- Delete surrounding
+          find = 'gsf', -- Find surrounding (to the right)
+          find_left = 'gsF', -- Find surrounding (to the left)
+          highlight = 'gsh', -- Highlight surrounding
+          replace = 'gsr', -- Replace surrounding
+          update_n_lines = 'gsn', -- Update `n_lines`
+        },
+      }
+    end
+  },
+  {
+    "mini.splitjoin",
+    for_cat = "general.extra",
+    event = "DeferredUIEnter",
+    after = function (_)
+      require("mini.splitjoin").setup {}
+    end
+  },
+  {
+    "mini.files",
+    for_cat = "general.extra",
+    event = "DeferredUIEnter",
+    after = function (_)
+      require("mini.files").setup {
+        preview = true,
+      }
+      vim.keymap.set("n", "<leader>e", MiniFiles.open, { desc = "Open Explorer" })
+    end
+  },
+  {
     "comment.nvim",
     for_cat = 'general.extra',
     event = "DeferredUIEnter",
@@ -104,7 +172,12 @@ require('lze').load {
     event = "DeferredUIEnter",
     -- keys = "",
     after = function(plugin)
-      require('fidget').setup({})
+      require('fidget').setup({
+        progress = {
+          suppress_on_insert = true,
+          ignore = { "ltex", },
+        },
+      })
     end,
   },
   -- {
@@ -263,6 +336,20 @@ require('lze').load {
           { "<leader>m", group = "Markdown" },
         }
       end
+    end,
+  },
+  {
+    "snacks.nvim",
+    for_cat = 'snacks',
+    event = "DeferredUIEnter",
+    after = function (plugin)
+      local config = {}
+
+      if nixCats("general.extra") then
+        config.lazygit = {}
+      end
+      
+      require('snacks').setup(config)
     end,
   },
 }

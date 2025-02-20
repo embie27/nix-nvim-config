@@ -67,13 +67,16 @@ return {
     dep_of = { "nvim-cmp" },
     after = function (plugin)
       local ls = require 'luasnip'
-      ls.config.setup {}
+      ls.config.setup { enable_autosnippets = true }
 
       vim.keymap.set({ "i", "s" }, "<M-n>", function()
           if ls.choice_active() then
               ls.change_choice(1)
           end
       end)
+
+      -- TODO correct path
+      require('luasnip.loaders.from_lua').load({ paths = { require('nixCats').configDir .. "/snippets" } })
     end,
   },
   {

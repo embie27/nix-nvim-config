@@ -1,23 +1,3 @@
-# Copyright (c) 2023 BirdeeHub
-# Licensed under the MIT license
-
-# Welcome to the main example config of nixCats!
-# there is a minimal flake the starter templates use
-# within the nix directory without the nixpkgs input,
-# but this one would work too!
-# Every config based on nixCats is a full nixCats.
-
-# This example config doesnt use lazy.nvim, and
-# it loads everything via nix.
-
-# It has some useful tricks
-# in it, especially for lsps, so if you have any questions,
-# first look through the docs, and then here!
-# It has examples of most of the things you would want to do
-# in your main nvim configuration.
-
-# If there is still not adequate info, ask in discussions
-# on the nixCats repo (or open a PR to add the info to the help!)
 {
   description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
 
@@ -214,6 +194,9 @@
             vim-fugitive
             vim-rhubarb
             nvim-surround
+            mini-basics
+            mini-ai
+            mini-jump
           ];
           extra = with pkgs.vimPlugins; [
             fidget-nvim
@@ -222,10 +205,14 @@
             undotree
             indent-blankline-nvim
             vim-startuptime
+            mini-surround
+            mini-splitjoin
+            mini-files
             # If it was included in your flake inputs as plugins-hlargs,
             # this would be how to add that plugin in your config.
             # pkgs.neovimPlugins.hlargs
           ];
+          snacks = [ pkgs.vimPlugins.snacks-nvim ];
         };
       };
 
@@ -259,6 +246,9 @@
         debug = [
           [ "debug" "default" ]
         ];
+        general.extra = [
+          [ "general" "snacks" ] # to enable lazygit on general.extra
+        ];
         # go = [
         #   [ "debug" "go" ] # yes it has to be a list of lists
         # ];
@@ -290,6 +280,7 @@
           format = true;
           neonixdev = true;
           languages = true;
+          snacks = true;
 
           # enabling this category will enable the go category,
           # and ALSO debug.go and debug.default due to our extraCats in categoryDefinitions.
