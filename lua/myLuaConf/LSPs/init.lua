@@ -108,13 +108,45 @@ if nixCats('languages.latex') then
         formatterLineLength = 80,
         forwardSearch = {
           executable = "sioyek",
-          args = { "--reuse-window", "--inverse-search", 'nvim-texlabconfig -file "%1" -line %2', "--forward-search-file", "%f", "--forward-search-line", "%l", "%p" },
+          args = { "--inverse-search", 'nvim-texlabconfig -file "%%1" -line %%2 -server "' .. vim.v.servername .. '"', "--forward-search-file", "%f", "--forward-search-line", "%l", "%p" },
         },
       },
     },
     on_attach_extra = function (_, _)
-      vim.keymap.set("n", "mm", "<cmd>TexlabBuild<cr>", { desc = "Compile" })
-      vim.keymap.set("n", "mf", "<cmd>TexlabForward<cr>", { desc = "Forward search" })
+      local changeEnv = function()
+        local params = vim.lsp.util.make_position_params()
+        local clients = vim.lsp.get_clients {
+          bufnr = vim.api.nvim_get_current_buf(),
+          name = 'texlab',
+        }
+        for _, client in ipairs(clients) do
+          client.request("workspace/executeCommand", {
+            command = "texlab.findEnvironments",
+            arguments = { params },
+          }, function(_, envs, _)
+              if #(envs) == 0 then
+                print("No environment found")
+                return
+              end
+              local name = envs[#envs].name.text
+              vim.ui.input({
+                prompt = 'Rename environment: ',
+                default = name,
+              }, function(input)
+                  params.newName = input;
+                  client.request("workspace/executeCommand", {
+                    command = "texlab.changeEnvironment",
+                    arguments = {params},
+                  }, nil, 0)
+                end)
+            end)
+        end
+      end
+
+      vim.keymap.set("n", "<leader>mm", "<cmd>TexlabBuild<cr>", { desc = "Compile" })
+      vim.keymap.set("n", "<leader>mf", "<cmd>TexlabForward<cr>", { desc = "Forward search" })
+      vim.keymap.set("n", "<leader>le", changeEnv, { desc = "Rename environment" })
+
     end,
   }
   servers.ltex = {

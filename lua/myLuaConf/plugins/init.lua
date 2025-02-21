@@ -44,6 +44,14 @@ require('lze').load {
     on_require = "ltex_extra",
   },
   {
+    "texlabconfig",
+    for_cat = "languages.latex",
+    ft = "tex",
+    after = function (_)
+      require("texlabconfig").setup()
+    end
+  },
+  {
     "markdown-preview.nvim",
     -- NOTE: for_cat is a custom handler that just sets enabled value for us,
     -- based on result of nixCats('cat.name') and allows us to set a different default if we wish
@@ -89,9 +97,10 @@ require('lze').load {
     "mini.ai",
     for_cat = "general.always",
     event = "DeferredUIEnter",
+    on_require = "mini.ai",
     after = function (_)
       require("mini.ai").setup {
-        -- TODO
+        search_method = 'cover',
       }
     end
   },
@@ -107,6 +116,7 @@ require('lze').load {
     "mini.surround",
     for_cat = "general.extra",
     event = "DeferredUIEnter",
+    on_require = "mini.surround",
     after = function (_)
       require("mini.surround").setup {
         mappings = {
@@ -347,6 +357,8 @@ require('lze').load {
 
       if nixCats("general.extra") then
         config.lazygit = {}
+
+        vim.keymap.set("n", "<leader>gg", Snacks.lazygit.open, { desc = "Open Lazygit" })
       end
       
       require('snacks').setup(config)
