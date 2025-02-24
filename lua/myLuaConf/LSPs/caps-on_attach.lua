@@ -1,5 +1,5 @@
 local M = {}
-function on_attach(_, bufnr)
+local function on_attach(_, bufnr)
   -- we create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
 
