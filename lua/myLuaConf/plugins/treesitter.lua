@@ -79,4 +79,14 @@ return {
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     end,
   },
+  {
+    "nvim-treesitter-context",
+    for_cat = "general.treesitter",
+    event = "DeferredUIEnter",
+    after = function (_)
+      require("treesitter-context").setup {
+        separator = "-",
+      }
+    end
+  }
 }
