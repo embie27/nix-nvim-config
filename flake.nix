@@ -198,6 +198,7 @@
             mini-basics
             mini-ai
             mini-jump
+            mini-pairs
           ];
           extra = with pkgs.vimPlugins; [
             fidget-nvim

@@ -113,6 +113,18 @@ require('lze').load {
     end
   },
   {
+    "mini.pairs",
+    for_cat = "general.always",
+    event = "DeferredUIEnter",
+    after = function (_)
+      require("mini.pairs").setup {
+        mappings = {
+          ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%w\\].', register = { cr = false } },
+        }
+      }
+    end
+  },
+  {
     "mini.surround",
     for_cat = "general.extra",
     event = "DeferredUIEnter",
