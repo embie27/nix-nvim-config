@@ -264,14 +264,14 @@
 
     # see :help nixCats.flake.outputs.packageDefinitions
     packageDefinitions = {
-      myCats = { pkgs, ... }@misc: {
+      nvim-full = { pkgs, ... }@misc: {
         # these also recieve our pkgs variable
         # see :help nixCats.flake.outputs.packageDefinitions
         settings = {
-          aliases = [ "vim" "vimcat" ];
+          aliases = [ "nvim" ];
 
           wrapRc = true;
-          configDirName = "nixCats-nvim";
+          configDirName = "nvim-full-nvim";
           # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
         };
         # enable the categories you want from categoryDefinitions
@@ -304,6 +304,42 @@
             nixpkgs = nixpkgs;
           };
         };
+      };
+      nvim-minimal = { pkgs, ... }@misc: {
+        # these also recieve our pkgs variable
+        # see :help nixCats.flake.outputs.packageDefinitions
+        settings = {
+          aliases = [];
+
+          wrapRc = true;
+          configDirName = "nvim-minimal-nvim";
+          # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+        };
+        # enable the categories you want from categoryDefinitions
+        categories = {
+          general.always = true;
+        };
+        extra = { };
+      };
+      nvim-basic = { pkgs, ... }@misc: {
+        # these also recieve our pkgs variable
+        # see :help nixCats.flake.outputs.packageDefinitions
+        settings = {
+          aliases = [];
+
+          wrapRc = true;
+          configDirName = "nvim-basic-nvim";
+          # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+        };
+        # enable the categories you want from categoryDefinitions
+        categories = {
+          general = true;
+          snacks = true;
+
+          themer = true;
+          colorscheme = "catppuccin-latte";
+        };
+        extra = { };
       };
     };
 
