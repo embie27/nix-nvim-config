@@ -343,7 +343,7 @@
       };
     };
 
-    defaultPackageName = "myCats";
+    defaultPackageName = "nvim-basic";
   in
   # you shouldnt need to change much past here, but you can if you wish.
   # but you should at least eventually try to figure out whats going on here!
