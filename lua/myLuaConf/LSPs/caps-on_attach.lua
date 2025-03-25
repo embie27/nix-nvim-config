@@ -40,6 +40,9 @@ local function on_attach(_, bufnr)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
 
+  -- Enable inlay hints
+  vim.lsp.inlay_hint.enable(true)
+
   if nixCats('general.which-key') then
     require('which-key').add {
       { "<leader>l", group = "Lsp" },
