@@ -74,6 +74,7 @@
         languages = with pkgs; {
           bash = [ bash-language-server ];
           python = [ pyright ];
+          php = [ phpactor ];
           latex = let
             nvim-texlabconfig-command = pkgs.buildGoModule {
               name = "nvim-texlabconfig";

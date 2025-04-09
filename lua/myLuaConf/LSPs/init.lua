@@ -89,6 +89,9 @@ end
 if nixCats('languages.python') then
   servers.pyright = {}
 end
+if nixCats('languages.php') then
+  servers.phpactor = {}
+end
 if nixCats('languages.latex') then
   servers.texlab = {
     settings = {
