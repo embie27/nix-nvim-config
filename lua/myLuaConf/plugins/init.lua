@@ -41,6 +41,7 @@ require('lze').load {
   {
     "ltex_extra.nvim",
     for_cat = "languages.latex",
+    ft = "tex",
     on_require = "ltex_extra",
   },
   {
@@ -50,6 +51,12 @@ require('lze').load {
     after = function (_)
       require("texlabconfig").setup()
     end
+  },
+  {
+    "texmagic",
+    for_cat = "languages.latex",
+    on_require = "texmagic",
+    ft = "tex",
   },
   {
     "markdown-preview.nvim",

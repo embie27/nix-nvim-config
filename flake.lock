@@ -47,11 +47,28 @@
         "type": "github"
       }
     },
+    "plugins-texmagic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1652629419,
+        "narHash": "sha256-+IltvS5R9st+b97PtEdDnflymSP2JFpmqlXOrnzTJqc=",
+        "owner": "jakewvincent",
+        "repo": "texmagic.nvim",
+        "rev": "3c0d3b63c62486f02807663f5c5948e8b237b182",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jakewvincent",
+        "repo": "texmagic.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
-        "plugins-texlabconfig": "plugins-texlabconfig"
+        "plugins-texlabconfig": "plugins-texlabconfig",
+        "plugins-texmagic": "plugins-texmagic"
       }
     }
   },

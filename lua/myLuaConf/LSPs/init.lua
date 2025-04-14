@@ -93,16 +93,27 @@ if nixCats('languages.php') then
   servers.phpactor = {}
 end
 if nixCats('languages.latex') then
+  require("texmagic").setup{
+    engines = {
+      lualatex = {    -- This is *not* one of the defaults, but it can be
+        -- called via magic comment if defined here
+        executable = "latexmk",
+        args = {
+          "-pdflua",
+          "-interaction=nonstopmode",
+          "-synctex=1",
+          "-pv",
+          "%f"
+        },
+        isContinuous = false
+      },
+    }
+  }
   servers.texlab = {
     settings = {
       texlab = {
         bibtexFormatter = "texlab",
-        build = {
-          executable = "latexmk",
-          args = { "-pdf", "-interaction=nonstopmode", "-outdir=.", "-synctex=1", "%f" },
-          forwardSearchAfter = true,
-          onSave = false,
-        },
+        build = _G.TeXMagicBuildConfig,
         chktex = {
           onEdit = false,
           onOpenAndSave = false,

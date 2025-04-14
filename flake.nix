@@ -8,6 +8,10 @@
       url = "github:f3fora/nvim-texlabconfig";
       flake = false;
     };
+    plugins-texmagic = {
+      url = "github:jakewvincent/texmagic.nvim";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs
@@ -151,6 +155,7 @@
           latex = with pkgs.vimPlugins; [
             ltex_extra-nvim
             pkgs.neovimPlugins.texlabconfig
+            pkgs.neovimPlugins.texmagic
           ];
         };
         general = {
