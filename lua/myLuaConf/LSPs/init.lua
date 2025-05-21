@@ -164,11 +164,11 @@ if nixCats('languages.latex') then
     end,
   }
   servers.ltex = {
-    on_attach_extra = function (_, _)
+    on_attach_extra = function (client, _)
       require("ltex_extra").setup {
         load_langs = { "de-DE", "en-US" },
         init_check = true,
-        path = "ltex_dicts",
+        path = (client.root_dir or ".") .."/ltex_dicts",
         log_level = "none",
       }
     end,
