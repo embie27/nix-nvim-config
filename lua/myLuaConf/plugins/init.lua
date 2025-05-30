@@ -126,7 +126,9 @@ require('lze').load {
     after = function (_)
       require("mini.pairs").setup {
         mappings = {
-          ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%w\\].', register = { cr = false } },
+          ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = "[^%w'\\].", register = { cr = false } },
+          ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\"].',   register = { cr = false } },
+          ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\`].',   register = { cr = false } },
         }
       }
     end
