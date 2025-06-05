@@ -164,6 +164,16 @@ if nixCats('languages.latex') then
     end,
   }
   servers.ltex = {
+    settings = {
+      ltex = {
+        latex = {
+          commands = {
+            ["\\todo[]{}"] = "ignore",
+            ["\\todo{}"] = "ignore",
+          },
+        },
+      },
+    },
     on_attach_extra = function (client, _)
       require("ltex_extra").setup {
         load_langs = { "de-DE", "en-US" },
