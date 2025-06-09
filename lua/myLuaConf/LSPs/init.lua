@@ -170,6 +170,8 @@ if nixCats('languages.latex') then
           commands = {
             ["\\todo[]{}"] = "ignore",
             ["\\todo{}"] = "ignore",
+            ["\\labelcref{}"] = "dummy", -- can be removed once I upgrade to ltex-ls-plus
+            ["\\MD{}"] = "dummy", -- only necessary for master thesis; find a more suitable solution for similar cases in the future
           },
         },
       },
