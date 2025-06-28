@@ -122,7 +122,13 @@ if nixCats('languages.latex') then
         formatterLineLength = 80,
         forwardSearch = {
           executable = "sioyek",
-          args = { "--inverse-search", 'nvim-texlabconfig -file "%%1" -line %%2 -server "' .. vim.v.servername .. '"', "--forward-search-file", "%f", "--forward-search-line", "%l", "%p" },
+          args = { "--execute-command", "toggle_synctex", "--inverse-search", 'nvim-texlabconfig -file "%%1" -line %%2 -server "' .. vim.v.servername .. '"', "--forward-search-file", "%f", "--forward-search-line", "%l", "%p" },
+        },
+        experimental = {
+          labelReferenceRangeCommands = { "labelcrefrange" },
+        },
+        inlayHints = {
+          maxLength = 15,
         },
       },
     },
@@ -171,6 +177,7 @@ if nixCats('languages.latex') then
             ["\\todo[]{}"] = "ignore",
             ["\\todo{}"] = "ignore",
             ["\\labelcref{}"] = "dummy", -- can be removed once I upgrade to ltex-ls-plus
+            ["\\labelcrefrange{}{}"] = "dummy",
             ["\\MD{}"] = "dummy", -- only necessary for master thesis; find a more suitable solution for similar cases in the future
           },
         },
