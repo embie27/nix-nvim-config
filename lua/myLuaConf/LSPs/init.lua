@@ -122,7 +122,7 @@ if nixCats('languages.latex') then
         formatterLineLength = 80,
         forwardSearch = {
           executable = "sioyek",
-          args = { "--execute-command", "toggle_synctex", "--inverse-search", 'nvim-texlabconfig -file "%%1" -line %%2 -server "' .. vim.v.servername .. '"', "--forward-search-file", "%f", "--forward-search-line", "%l", "%p" },
+          args = { "--execute-command", "turn_on_synctex", "--inverse-search", 'nvim-texlabconfig -file "%%1" -line %%2 -server "' .. vim.v.servername .. '"', "--forward-search-file", "%f", "--forward-search-line", "%l", "%p" },
         },
         experimental = {
           labelReferenceRangeCommands = { "labelcrefrange" },
