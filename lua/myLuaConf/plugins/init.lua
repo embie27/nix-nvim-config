@@ -52,12 +52,12 @@ require('lze').load {
       require("texlabconfig").setup()
     end
   },
-  {
-    "texmagic",
-    for_cat = "languages.latex",
-    on_require = "texmagic",
-    ft = "tex",
-  },
+  -- {
+  --   "texmagic",
+  --   for_cat = "languages.latex",
+  --   on_require = "texmagic",
+  --   ft = "tex",
+  -- },
   {
     "markdown-preview.nvim",
     -- NOTE: for_cat is a custom handler that just sets enabled value for us,

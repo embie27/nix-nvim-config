@@ -101,6 +101,7 @@
             vim-repeat
             plenary-nvim
             nvim-notify
+            nvim-lspconfig
           ];
           extra = [
             nvim-web-devicons
@@ -194,7 +195,6 @@
             which-key-nvim
           ];
           always = with pkgs.vimPlugins; [
-            nvim-lspconfig
             # lualine-nvim
             gitsigns-nvim
             vim-sleuth
