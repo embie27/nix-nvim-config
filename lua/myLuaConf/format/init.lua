@@ -6,7 +6,7 @@ require('lze').load {
     -- event = "",
     -- ft = "",
     keys = {
-      { "<leader>lf", desc = "Format [f]ile" },
+      { "<leader>lF", desc = "[F]ormat file" },
     },
     -- colorscheme = "",
     after = function (plugin)
@@ -26,13 +26,13 @@ require('lze').load {
         },
       })
 
-      vim.keymap.set({ "n", "v" }, "<leader>lf", function()
+      vim.keymap.set({ "n", "v" }, "<leader>lF", function()
         conform.format({
           lsp_fallback = true,
           async = false,
           timeout_ms = 1000,
         })
-      end, { desc = "Format [f]ile" })
+      end, { desc = "[F]ormat file" })
     end,
   },
 }

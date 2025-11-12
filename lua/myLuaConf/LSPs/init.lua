@@ -12,7 +12,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     if client.name == "texlab" then
-      vim.keymap.set("n", "<leader>mf", "<cmd>LspTexlabForward<cr>", { desc = "Forward search", silent = true })
+      vim.keymap.set("n", "<leader>lf", "<cmd>LspTexlabForward<cr>", { desc = "Forward search", silent = true })
+      vim.keymap.set("n", "<leader>lb", "<cmd>LspTexlabBuild<cr>", { desc = "Build", silent = true })
     end
   end
 })
