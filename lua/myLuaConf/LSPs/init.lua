@@ -14,6 +14,67 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if client.name == "texlab" then
       vim.keymap.set("n", "<leader>lf", "<cmd>LspTexlabForward<cr>", { desc = "Forward search", silent = true })
       vim.keymap.set("n", "<leader>lb", "<cmd>LspTexlabBuild<cr>", { desc = "Build", silent = true })
+
+      local changeEnv = function()
+        local params = vim.lsp.util.make_position_params()
+        local clients = vim.lsp.get_clients {
+          bufnr = vim.api.nvim_get_current_buf(),
+          name = 'texlab',
+        }
+        for _, client in ipairs(clients) do
+          client.request("workspace/executeCommand", {
+            command = "texlab.findEnvironments",
+            arguments = { params },
+          }, function(_, envs, _)
+              if #(envs) == 0 then
+                print("No environment found")
+                return
+              end
+              local name = envs[#envs].name.text
+              vim.ui.input({
+                prompt = 'Rename environment: ',
+                default = name,
+              }, function(input)
+                  params.newName = input;
+                  client.request("workspace/executeCommand", {
+                    command = "texlab.changeEnvironment",
+                    arguments = {params},
+                  }, nil, 0)
+                end)
+            end)
+        end
+      end
+      vim.keymap.set("n", "<leader>le", changeEnv, { desc = "Rename environment" })
+
+      local toggleAppendixProof = function ()
+        local params = vim.lsp.util.make_position_params()
+        local clients = vim.lsp.get_clients {
+          bufnr = vim.api.nvim_get_current_buf(),
+          name = 'texlab',
+        }
+        for _, client in ipairs(clients) do
+          client.request("workspace/executeCommand", {
+            command = "texlab.findEnvironments",
+            arguments = { params },
+          }, function(_, envs, _)
+              if #(envs) == 0 then
+                print("No environment found")
+                return
+              end
+              local name = envs[#envs].name.text
+              if string.sub(name, -1) == "E" then
+                params.newName = string.sub(name, 1, -2)    -- remove last character
+              else
+                params.newName = name .. "E"                 -- add "E" at the end
+              end
+              client.request("workspace/executeCommand", {
+                command = "texlab.changeEnvironment",
+                arguments = {params},
+              }, nil, 0)
+            end)
+        end
+      end
+      vim.keymap.set("n", "<leader>lp", toggleAppendixProof, { desc = "Toggle appendix proof" })
     end
   end
 })
