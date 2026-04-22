@@ -171,6 +171,11 @@ return {
 
 {
   s("$$", { t "\\( ", i(1), t " \\)", i(0) }),
+  s("$d", fmt([[
+    \[
+      {}
+    \]
+  ]], i(1))),
   s({ trig = "([^%s%$]+)%$", trigEngine = balanced_engine, priority = 1001 }, {
     t "\\( ",
     f(function(_, snip, _)
